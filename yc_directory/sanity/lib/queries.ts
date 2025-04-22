@@ -1,0 +1,102 @@
+import { defineQuery } from "next-sanity";
+
+export const STARTUP_QUERY =
+  defineQuery(`*[_type == "startup" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] |  order(_createdAt desc) {
+  _id,
+  title,
+  slug,
+  _createdAt,
+  author -> {
+    _id, name, image, bio
+  }  ,
+    description,
+    image,
+    category,
+    pitch,
+    views, 
+}`);
+
+export const STARTUP_BY_AUTHUR_QUERY =
+  defineQuery(`*[_type == "startup" && author._ref == $id] |  order(_createdAt desc) {
+  _id,
+  title,
+  slug,
+  _createdAt,
+  author -> {
+    _id, name, image, bio
+  }  ,
+    description,
+    image,
+    category,
+    pitch,
+    views, 
+}`);
+
+export const STARTUP_BY_ID_QUERY =
+  defineQuery(`*[_type == "startup" && _id match $id][0]  {
+  _id,
+  title,
+  slug,
+  _createdAt,
+  author -> {
+    _id, name, username, image, bio
+  }  ,
+    description,
+    image,
+    category,
+    pitch,
+    views, 
+}`);
+
+export const STARTUP_QUERY_VIEWS =
+  defineQuery(`*[_type == "startup" && _id == $id][0] {
+  _id, 
+  views
+  }`);
+
+export const AUTHUR_BY_GITHUB_ID_QUERY =
+  defineQuery(`*[_type == 'author' && $id == id][0] {
+    _id, 
+    id, 
+    name, 
+    username, 
+    email,
+    image, 
+    bio
+    }`);
+
+export const AUTHUR_BY_ID_QUERY =
+  defineQuery(`*[_type == 'author' && $id == _id][0] {
+      _id, 
+      id, 
+      name, 
+      username, 
+      email,
+      image, 
+      bio
+      }`);
+
+export const PLAYLIST_BY_SLUG_QUERY =
+  defineQuery(`*[_type == "playlist" && slug.current == $slug][0]{
+      _id,
+      title,
+      slug,
+      select[]->{
+        _id,
+        _createdAt,
+        title,
+        slug,
+        author->{
+          _id,
+          name,
+          slug,
+          image,
+          bio
+        },
+        views,
+        description,
+        category,
+        image,
+        pitch
+      }
+    }`);
