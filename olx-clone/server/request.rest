@@ -1,0 +1,18 @@
+POST http://localHost:5000/user/create-account
+Content-Type: application/json
+
+{
+    "email": "hello@test.io",
+    "password": "kwanso@123",
+    "firstName": "Hassan",
+    "lastName": "Mujahid"
+}
+
+###
+POST  http://localHost:5000/user/login
+Content-Type: application/json
+
+{
+    "email": "hello@test.io",
+    "password": "kwanso@123"
+}
